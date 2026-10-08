@@ -13,8 +13,12 @@ let nextId = 1;
 function addTask() {
   const text = input.value;
   errorEl.hidden = true;
-  tasks.push({ id: nextId++, text: text, done: false });
-  input.value = "";
+  if (input.value === "" || input.value.includes(" ")) {
+    errorEl.hidden = false;
+  } else {
+    tasks.push({ id: nextId++, text: text, done: false });
+  }
+  
   render();
 }
 
