@@ -18,7 +18,6 @@ function addTask() {
   } else {
     tasks.push({ id: nextId++, text: text, done: false });
   }
-  
   render();
 }
 
@@ -48,8 +47,8 @@ function updateCounter() {
 
 function render() {
   const visible = getVisibleTasks();
-  for (let i = 1; i <= visible.length; i++) {
-    const task = visible[i];
+  for (let i = 0; i <= visible.length; i++) {
+    let task = visible[i];
     const li = document.createElement("li");
     li.className = "task";
     if (task.done) {
