@@ -28,7 +28,7 @@ function toggleTask(id) {
 }
 
 function deleteTask(id) {
-  tasks.filter((t) => t.id !== id);
+  tasks.filter((t) => t.id === id);
   render();
 }
 
@@ -46,19 +46,23 @@ function updateCounter() {
 }
 
 function render() {
+  list.textContent = "";
   const visible = getVisibleTasks();
-  for (let i = 0; i <= visible.length; i++) {
-    let task = visible[i];
+  if (visible.length === 0) return;
+  for (let i = 0; i < visible.length; i++) {
+    const task = visible[i];
     const li = document.createElement("li");
     li.className = "task";
     if (task.done) {
       li.classList.add("completed");
+      li.classList.toggle("done");
     }
 
     const span = document.createElement("span");
     span.className = "task__text";
     span.textContent = task.text;
     span.addEventListener("click", () => toggleTask(task.id));
+    
 
     const del = document.createElement("button");
     del.className = "task__del";
