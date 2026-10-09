@@ -18,6 +18,7 @@ function addTask() {
   } else {
     tasks.push({ id: nextId++, text: text, done: false });
   }
+  input.value = "";
   render();
 }
 
@@ -91,7 +92,17 @@ filterButtons.forEach((btn) => {
     filterButtons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     currentFilter = btn.dataset.filter;
+    let tasksAll = tasks.slice();
+    const tasksActive = tasks.filter((t) => t.done === false);
+    const tasksDone = tasks.filter((t) => t.done === true);
+    if (currentFilter === "active") {
+      tasks = tasksActive;
+    }
+    if (currentFilter === "done") {
+      tasks = tasksDone;
+    }
     render();
+    tasks = tasksAll;
   });
 });
 
