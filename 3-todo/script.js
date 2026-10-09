@@ -23,7 +23,12 @@ function addTask() {
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
-  task.done = true;
+  console.log(task);
+  if (task.done === true) {
+    task.done = false;
+  } else {
+    task.done = true;
+  }
   render();
 }
 
@@ -61,6 +66,7 @@ function render() {
     const span = document.createElement("span");
     span.className = "task__text";
     span.textContent = task.text;
+    console.log(task);
     span.addEventListener("click", () => toggleTask(task.id));
     
 
