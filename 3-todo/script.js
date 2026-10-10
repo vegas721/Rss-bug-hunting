@@ -13,7 +13,7 @@ let nextId = 1;
 function addTask() {
   const text = input.value;
   errorEl.hidden = true;
-  if (input.value === "" || input.value.includes(" ")) {
+  if (input.value.trim() === "") {
     errorEl.hidden = false;
   } else {
     tasks.push({ id: nextId++, text: text, done: false });
