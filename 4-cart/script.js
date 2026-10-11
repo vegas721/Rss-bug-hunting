@@ -17,6 +17,7 @@ const promoInput = document.getElementById("promo-input");
 const promoBtn = document.getElementById("promo-btn");
 const clearBtn = document.getElementById("clear-btn");
 
+emptyMsg.hidden = true;
 function renderProducts() {
   products.forEach((p) => {
     const card = document.createElement("div");
@@ -109,7 +110,7 @@ function renderCart() {
 
   badgeEl.textContent = quantity;
   totalEl.textContent = total;
-  emptyMsg.hidden = true;
+  cart.length === 0 ? emptyMsg.hidden = false : emptyMsg.hidden = true;
 }
 
 promoBtn.addEventListener("click", applyPromo);
