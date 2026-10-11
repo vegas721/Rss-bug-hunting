@@ -16,6 +16,7 @@ const resetBtn = document.getElementById("reset");
 const grid = document.getElementById("grid");
 const countEl = document.getElementById("count");
 
+/* change for test */
 function getFiltered() {
   let result = products.slice();
   const search = searchInput.value.toLowerCase();
