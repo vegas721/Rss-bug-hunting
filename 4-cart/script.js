@@ -17,7 +17,6 @@ const promoInput = document.getElementById("promo-input");
 const promoBtn = document.getElementById("promo-btn");
 const clearBtn = document.getElementById("clear-btn");
 
-emptyMsg.hidden = true;
 function renderProducts() {
   products.forEach((p) => {
     const card = document.createElement("div");
