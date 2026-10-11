@@ -27,16 +27,19 @@ function getFiltered() {
   }
 
   if (category !== "all") {
-    result = products.filter((p) => p.category === category);
+    result = result.filter((p) => p.category === category);
   }
 
   if (sort === "asc") {
     result.sort((a, b) => a.price - b.price);
   } else if (sort === "desc") {
     result.sort((a, b) => b.price - a.price);
-  } else if (sort === "default") {
+  } else if (sort === "default" && category !== "all") {
+    result = result.filter((p) => p.category === category);
+  } else if (sort === "default" && search) {
+    result = result = result.filter((p) => p.name.toLowerCase().includes(search));
+  } else {
     result = products;
-    console.log(result);
   }
 
   return result;
