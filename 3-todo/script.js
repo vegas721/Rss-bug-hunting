@@ -13,24 +13,33 @@ let nextId = 1;
 function addTask() {
   const text = input.value;
   errorEl.hidden = true;
-  tasks.push({ id: nextId++, text: text, done: false });
+  if (input.value.trim() === "") {
+    errorEl.hidden = false;
+  } else {
+    tasks.push({ id: nextId++, text: text, done: false });
+  }
   input.value = "";
   render();
 }
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
-  task.done = true;
+  if (task.done === true) {
+    task.done = false;
+  } else {
+    task.done = true;
+  }
   render();
 }
 
 function deleteTask(id) {
-  tasks.filter((t) => t.id !== id);
+  tasks = tasks.filter((t) => t.id !== id);
   render();
+  updateCounter();
 }
 
 function clearCompleted() {
-  tasks = [];
+  tasks = tasks.filter((t) => t.done === false);
   render();
 }
 
@@ -39,23 +48,28 @@ function getVisibleTasks() {
 }
 
 function updateCounter() {
-  counter.textContent = "Активных задач: " + tasks.length;
+  const activeTasks = tasks.filter((t) => t.done === false);
+  counter.textContent = "Активных задач: " + activeTasks.length;
 }
 
 function render() {
+  list.textContent = "";
   const visible = getVisibleTasks();
-  for (let i = 1; i <= visible.length; i++) {
+  if (visible.length === 0) return;
+  for (let i = 0; i < visible.length; i++) {
     const task = visible[i];
     const li = document.createElement("li");
     li.className = "task";
     if (task.done) {
       li.classList.add("completed");
+      li.classList.toggle("done");
     }
 
     const span = document.createElement("span");
     span.className = "task__text";
     span.textContent = task.text;
     span.addEventListener("click", () => toggleTask(task.id));
+    
 
     const del = document.createElement("button");
     del.className = "task__del";
@@ -69,7 +83,7 @@ function render() {
   updateCounter();
 }
 
-addBtn.addEventListener("dblclick", addTask);
+addBtn.addEventListener("click", addTask);
 clearBtn.addEventListener("click", clearCompleted);
 
 filterButtons.forEach((btn) => {
@@ -77,7 +91,17 @@ filterButtons.forEach((btn) => {
     filterButtons.forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     currentFilter = btn.dataset.filter;
+    let tasksAll = tasks.slice();
+    const tasksActive = tasks.filter((t) => t.done === false);
+    const tasksDone = tasks.filter((t) => t.done === true);
+    if (currentFilter === "active") {
+      tasks = tasksActive;
+    }
+    if (currentFilter === "done") {
+      tasks = tasksDone;
+    }
     render();
+    tasks = tasksAll;
   });
 });
 
